@@ -1,0 +1,161 @@
+/* Estilos gerais */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  h1 {
+    color: #333;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* Estilos das abas */
+  .tabs {
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  
+  .tablink {
+    background-color: #ffd700;
+    color: #000;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 18px;
+    width: 33.33%;
+  }
+  
+  .tablink:hover {
+    background-color: #555;
+    color: #fff;
+  }
+  
+  .tabcontent {
+    display: none;
+    padding: 20px;
+    border-top: none;
+  }
+  
+  /* Estilos do formulário de agendamento */
+  .form-agendamento {
+    margin-bottom: 20px;
+  }
+  
+  .form-agendamento label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .form-agendamento input[type="text"],
+  .form-agendamento input[type="date"],
+  .form-agendamento input[type="time"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  .form-agendamento input[type="submit"] {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .form-agendamento input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  
+  /* Estilos da lista de agendamentos */
+  .lista-agendamentos {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .lista-agendamentos li {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+  }
+  
+  .lista-agendamentos li:hover {
+    background-color: #e9e9e9;
+  }
+  
+  .lista-agendamentos li .acoes {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .lista-agendamentos li .acoes button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .lista-agendamentos li .acoes .btn-editar {
+    background-color: #ffd700;
+    color: #000;
+  }
+  
+  .lista-agendamentos li .acoes .btn-excluir {
+    background-color: #ff0000;
+    color: #fff;
+  }
+  
+  /* Estilos da seção de edição de agendamento */
+  .edicao-agendamento {
+    display: none;
+    margin-bottom: 20px;
+  }
+  
+  .edicao-agendamento label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .edicao-agendamento input[type="text"],
+  .edicao-agendamento input[type="date"],
+  .edicao-agendamento input[type="time"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  .edicao-agendamento .acoes {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .edicao-agendamento .acoes button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .edicao-agendamento .acoes .btn-salvar {
+    background-color: #4CAF50;
+    color: #fff;
+  }
+  
+  .edicao-agendamento .acoes .btn-cancelar {
+    background-color: #aaa;
+    color: #fff;
+  }
+  

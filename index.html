@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sistema de Agendamento</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <style>
+    /* Estilos das abas */
+    .tabs {
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .tablink {
+      background-color: #ffd700;
+      color: #000;
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      font-size: 18px;
+      width: 33.33%;
+    }
+
+    .tablink:hover {
+      background-color: #555;
+      color: #fff;
+    }
+
+    .tabcontent {
+      display: none;
+      padding: 20px;
+      border-top: none;
+    }
+
+    /* Estilos da seção de edição de agendamento */
+    #edicaoAgendamento {
+      display: none;
+    }
+
+    #edicaoAgendamento input[type="text"],
+    #edicaoAgendamento input[type="date"],
+    #edicaoAgendamento input[type="time"] {
+      margin-bottom: 10px;
+    }
+
+    #edicaoAgendamento .botoes {
+      margin-top: 10px;
+    }
+
+    #edicaoAgendamento .botoes button {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Sistema de Agendamento</h1>
+
+  <!-- Abas -->
+  <div class="tabs">
+    <button class="tablink" onclick="openTab(event, 'agendamentos')">Agendamentos</button>
+    <button class="tablink" onclick="openTab(event, 'novoAgendamento')">Novo Agendamento</button>
+  </div>
+
+  <!-- Conteúdo das Abas -->
+  <div id="agendamentos" class="tabcontent">
+    <h2>Lista de Agendamentos</h2>
+    <ul id="listaAgendamentos"></ul>
+  </div>
+
+  <div id="novoAgendamento" class="tabcontent">
+    <h2>Novo Agendamento</h2>
+    <form id="agendamentoForm">
+      <label for="cliente">Cliente:</label>
+      <input type="text" id="cliente" name="cliente" required>
+
+      <label for="data">Data:</label>
+      <input type="date" id="data" name="data" required>
+
+      <label for="hora">Hora:</label>
+      <input type="time" id="hora" name="hora" required>
+
+      <input type="submit" value="Agendar">
+    </form>
+  </div>
+
+  <!-- Seção de Edição de Agendamento -->
+  <div id="edicaoAgendamento" class="tabcontent">
+    <h2>Editar Agendamento</h2>
+    <form id="edicaoAgendamentoForm">
+      <label for="edicaoCliente">Cliente:</label>
+      <input type="text" id="edicaoCliente" name="edicaoCliente" required>
+
+      <label for="edicaoData">Data:</label>
+      <input type="date" id="edicaoData" name="edicaoData" required>
+
+      <label for="edicaoHora">Hora:</label>
+      <input type="time" id="edicaoHora" name="edicaoHora" required>
+
+      <div class="botoes">
+        <button onclick="salvarEdicao()">Salvar</button>
+        <button onclick="cancelarEdicao()">Cancelar</button>
+        <button onclick="excluirAgendamento()">Excluir</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    var agendamentos = [];
+
+    // Função para alternar entre as abas
+    function openTab(event, tabId) {
+      var i, tabcontent, tablinks;
+
+      // Oculta todos os conteúdos das abas
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+
+      // Remove a classe "active" de todos os botões das abas
+      tablinks = document.getElementsByClassName("tablink");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+
+      // Exibe o conteúdo da aba selecionada
+      document.getElementById(tabId).style.display = "block";
+
+      // Adiciona a classe "active" ao botão da aba selecionada
+      event.currentTarget.className += " active";
+    }
+
+    // Função para adicionar um agendamento à lista
+    function adicionarAgendamento(cliente, data, hora) {
+      var agendamento = {
+        cliente: cliente,
+        data: data,
+        hora: hora
+      };
+
+      agendamentos.push(agendamento);
+      exibirAgendamentos();
+    }
+
+    // Função para exibir a lista de agendamentos
+    function exibirAgendamentos() {
+      var listaAgendamentos = document.getElementById("listaAgendamentos");
+      listaAgendamentos.innerHTML = "";
+
+      for (var i = 0; i < agendamentos.length; i++) {
+        var agendamento = agendamentos[i];
+
+        var listItem = document.createElement("li");
+        listItem.textContent = agendamento.cliente + " - " + agendamento.data + " - " + agendamento.hora;
+        listItem.setAttribute("data-index", i);
+        listItem.addEventListener("click", exibirEdicaoAgendamento);
+
+        listaAgendamentos.appendChild(listItem);
+      }
+    }
+
+    // Função para exibir a seção de edição de agendamento
+    function exibirEdicaoAgendamento(event) {
+      var index = event.currentTarget.getAttribute("data-index");
+      var agendamento = agendamentos[index];
+
+      document.getElementById("edicaoCliente").value = agendamento.cliente;
+      document.getElementById("edicaoData").value = agendamento.data;
+      document.getElementById("edicaoHora").value = agendamento.hora;
+
+      document.getElementById("agendamentos").style.display = "none";
+      document.getElementById("edicaoAgendamento").style.display = "block";
+    }
+
+    // Função para salvar a edição de agendamento
+    function salvarEdicao() {
+      var index = document.getElementById("listaAgendamentos").querySelector("li.selected").getAttribute("data-index");
+
+      var agendamento = agendamentos[index];
+      agendamento.cliente = document.getElementById("edicaoCliente").value;
+      agendamento.data = document.getElementById("edicaoData").value;
+      agendamento.hora = document.getElementById("edicaoHora").value;
+
+      document.getElementById("edicaoCliente").value = "";
+      document.getElementById("edicaoData").value = "";
+      document.getElementById("edicaoHora").value = "";
+
+      document.getElementById("agendamentos").style.display = "block";
+      document.getElementById("edicaoAgendamento").style.display = "none";
+
+      exibirAgendamentos();
+    }
+
+    // Função para cancelar a edição de agendamento
+    function cancelarEdicao() {
+      document.getElementById("edicaoCliente").value = "";
+      document.getElementById("edicaoData").value = "";
+      document.getElementById("edicaoHora").value = "";
+
+      document.getElementById("agendamentos").style.display = "block";
+      document.getElementById("edicaoAgendamento").style.display = "none";
+    }
+
+    // Função para excluir um agendamento
+    function excluirAgendamento() {
+      var index = document.getElementById("listaAgendamentos").querySelector("li.selected").getAttribute("data-index");
+      agendamentos.splice(index, 1);
+
+      document.getElementById("edicaoCliente").value = "";
+      document.getElementById("edicaoData").value = "";
+      document.getElementById("edicaoHora").value = "";
+
+      document.getElementById("agendamentos").style.display = "block";
+      document.getElementById("edicaoAgendamento").style.display = "none";
+
+      exibirAgendamentos();
+    }
+
+    // Manipulador de evento para o agendamento de novos agendamentos
+    document.getElementById("agendamentoForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Impede o envio padrão do formulário
+
+      var cliente = document.getElementById("cliente").value;
+      var data = document.getElementById("data").value;
+      var hora = document.getElementById("hora").value;
+
+      adicionarAgendamento(cliente, data, hora);
+
+      document.getElementById("cliente").value = "";
+      document.getElementById("data").value = "";
+      document.getElementById("hora").value = "";
+    });
+  </script>
+</body>
+</html>
